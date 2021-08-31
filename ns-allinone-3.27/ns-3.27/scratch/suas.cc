@@ -62,28 +62,6 @@
 #include "ns3/pointer.h"
 #include "ns3/boolean.h"
 
-
-
-//
-//#include "crypto++/osrng.h"
-//
-//#include "crypto++/filters.h"
-//using CryptoPP::StringSink;
-//using CryptoPP::StringSource;
-//using CryptoPP::StreamTransformationFilter;
-
-//#include "crypto++/hex.h"
-//
-//#include "crypto++/rc5.h"
-//
-//#include "crypto++/aes.h"
-//using CryptoPP::AES;
-
-//#include "crypto++/cryptlib.h"
-
-//#include "crypto++/ccm.h"
-//using CryptoPP::CBC_Mode;
-
 #include "assert.h"
 
 #include <iostream>
@@ -101,7 +79,6 @@ using std::string;
 NS_LOG_COMPONENT_DEFINE ("Suastika");
 
 using namespace ns3;
-//using namespace CryptoPP;
 
 static inline std::string
 PrintReceivedPacket (Address& from)
@@ -183,7 +160,7 @@ main (int argc, char *argv[])
   bool verbose = false;
 
 double distance = 100;
-  uint32_t fakeNode = 1;
+  uint32_t NodeFire = 1;
 
 //  bool tracing = false;
 
@@ -223,7 +200,7 @@ double distance = 100;
 
  
 
-  string plain = "Test Pesan";
+  string plain = "Pesan Kebakaran";
   cout << "pesan: " << plain << endl;
  
   NodeContainer c;
@@ -241,7 +218,7 @@ double distance = 100;
   networkNodes.Add (c.Get (9));
 
   NodeContainer f;
-  f.Create(fakeNode);
+  f.Create(NodeFire);
 
 
   // The below set of helpers will help us to put together the wifi NICs we want
@@ -328,8 +305,7 @@ InternetStackHelper internet;
   /***************************************************************************/
 
   /** Internet stack **/
-//  InternetStackHelper internet;
-//  internet.Install (networkNodes);
+
 
   Ipv4AddressHelper ipv4;
   NS_LOG_INFO ("Assign IP Addresses.");
@@ -398,7 +374,7 @@ Ipv4InterfaceContainer j = ipv4.Assign(fakeDevices);
   client_app_9.Start(Seconds(2.0));
   client_app_9.Stop(Seconds(1500.0));
 
-  //----------------connecting fakeNodes to network-------------------
+  //----------------connecting NodeFire to network-------------------
   UdpEchoClientHelper fakeClient(i.GetAddress(4), 91);
   fakeClient.SetAttribute("MaxPackets", UintegerValue(1000));
   fakeClient.SetAttribute("Interval", TimeValue(Seconds(2.0)));
@@ -445,32 +421,32 @@ Ipv4InterfaceContainer j = ipv4.Assign(fakeDevices);
   //Output
   AsciiTraceHelper ascii;
   wifiPhy.EnableAsciiAll(ascii.CreateFileStream("wireless_no_encrypt10.tr"));
-  wifiPhy.EnablePcap("Pcap_Suastika222", devices);
+  wifiPhy.EnablePcap("Pcap_Kebakaran222", devices);
 
   Ptr<OutputStreamWrapper> routingStream = Create<OutputStreamWrapper>("rute", std::ios::out);
   //olsr.PrintRoutingTableAllEvery(Seconds(2.0),routingStream);
 
   /*Animation setup*/
-  AnimationInterface anm("Suastika.xml");
+  AnimationInterface anm("SimulasiKebakaran.xml");
 
 
   /*Setting titik di NetAnim*/
-  anm.SetConstantPosition(c.Get(0),100.0, 100.0);
-  anm.SetConstantPosition(c.Get(1),200.0, 50.0);
-  anm.SetConstantPosition(c.Get(2),250.0, 85.0);
-  anm.SetConstantPosition(c.Get(3),200.0, 150.0);
-  anm.SetConstantPosition(c.Get(4),275.0, 25.0);
-  anm.SetConstantPosition(c.Get(5),135.0, 315.0);
-  anm.SetConstantPosition(c.Get(6),175.0, 200.0);
-  anm.SetConstantPosition(c.Get(7),100.0, 325.0);
-  anm.SetConstantPosition(c.Get(8),375.0, 115.0);
-  anm.SetConstantPosition(c.Get(9),265.0, 175.0);
+  anm.SetConstantPosition(c.Get(0),244.964849, 218.34505);
+  anm.SetConstantPosition(c.Get(1),697.327746, 997.327746);
+  anm.SetConstantPosition(c.Get(2),662.720957, 432.544191);
+  anm.SetConstantPosition(c.Get(3),324.824104, 624.824104);
+  anm.SetConstantPosition(c.Get(4),642.164131, 575.213199);
+  anm.SetConstantPosition(c.Get(5),000.0, 300.0);
+  anm.SetConstantPosition(c.Get(6),120.790137, 903.950687);
+  anm.SetConstantPosition(c.Get(7),73.849727, 373.849727);
+  anm.SetConstantPosition(c.Get(8),157.837131, 247.387623);
+  anm.SetConstantPosition(c.Get(9),305.399237, 605.399237);
 
 
   //-------------------------------------------------
 
-  anm.SetConstantPosition(f.Get(0), 200.0, 177.0);
-anm.SetConstantPosition(f.Get(0), 200.0, 177.0);
+  anm.SetConstantPosition(f.Get(0), 300.0, 300.0);
+//anm.SetConstantPosition(f.Get(0), 300.0, 300.0);
 
 
   /** simulation setup **/
